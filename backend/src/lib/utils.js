@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken"
 
-// generating a token
-function generateToken(userId,res){
+// generating a token 
+//using es module
+
+export const generateToken= (userId,res)=>{
     const token = jwt.sign({userId},process.env.JWT_SECRET,{
         expiresIn:"7d"
     })
@@ -15,8 +17,5 @@ function generateToken(userId,res){
     });
 
     return token;
-}
+};
 
-module.exports={
-    generateToken
-}
