@@ -1,7 +1,10 @@
-import express from "express"//prim
-import { protectRoute } from "../middleware/auth.middleware";
+import express from "express"//primary
+import { protectRoute } from "../middleware/auth.middleware.js";
+import { getUsersForSidebar, getMessages, sendMessage } from "../controllers/message.controller.js";
 
-const router = express.Router();//prim
+const router = express.Router();//primary
 
-router.get("/users",protectRoute,getUsersForSidebar)
-export default router;//prim
+router.get("/users",protectRoute,getUsersForSidebar);
+router.get("/:id",protectRoute,getMessages);
+router.post("/send/:id",protectRoute,sendMessage)
+export default router;//primary
