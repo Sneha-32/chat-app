@@ -3,6 +3,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { MessageSquare, User, Mail, Lock, EyeOff, Eye, Loader2} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AuthImagePattern from '../components/AuthImagePattern';
+import toast from 'react-hot-toast';
 
 const SignUpPage = () => {
   const [showPassword,setShowPassword]=useState(false);
@@ -16,11 +17,32 @@ const SignUpPage = () => {
   const {signup, isSigningUp} = useAuthStore();
 
   const validateForm=()=>{
-
+    if (!formData.fullName.trim()){
+      return toast.error("Full Name is REQUIRED!!");
+    }
+    if(!formData.email.trim()){
+      return toast.error("Email is REQUIRED!!");
+    }
+    if(!/^[a-z0-9_.%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(formData.email)){
+      return toast.error("Invalid email format")
+    }
+    if(!formData.password.trim()){
+      return toast.error("Password is REQUIRED!!");
+    }
+    if(formData.password.length<6){
+      return toast.error("Password must be at least 6 characters");
+    }
+    return true;
   }
 
   const handleSubmit = (e)=>{
     e.preventDefault();
+
+    const success = validateForm();
+
+    if(success ===true) {
+      signup(formData);
+    }
   }
 
 
@@ -53,7 +75,7 @@ const SignUpPage = () => {
               <input type="text" className={`input input-bordered w-full pl-10`} 
               placeholder='John Doe'
               value={formData.fullName}
-              onChange={(e)=>setFormData({...formData,fullName:e.target.vlaue})}
+              onChange={(e)=>setFormData({...formData,fullName:e.target.value})}
               />
             </div>
           </div>
@@ -103,7 +125,7 @@ const SignUpPage = () => {
           </div>
 
                                   {/* here the button is gonna be disabled while signing up */}
-          <button type='submit' className='btn btn-primary w-full disabled={isSigningUp}'>
+          <button type='submit' className='btn btn-primary w-full' disabled={isSigningUp}>
             {isSigningUp?(
               <>
               <Loader2 className='size-5 animate-spin'/>
