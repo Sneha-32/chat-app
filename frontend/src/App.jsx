@@ -13,13 +13,14 @@ import LoginPage from './pages/LoginPage'
 import SettingsPage from './pages/SettingsPage'
 import ProfilePage from './pages/ProfilePage'
 import { axiosInstance } from './lib/axios'
+import { useThemeStore } from './store/useThemeStore'
  
 
 
 
 const App = () => {
   const {authUser,checkAuth,isCheckingAuth}= useAuthStore();
-
+const {theme}=useThemeStore();
   useEffect(()=>{
     checkAuth()
   },[checkAuth]);  //dependency
@@ -36,7 +37,7 @@ const App = () => {
 
   return (
     
-<>
+<div data-theme={theme}>
 <Navbar/>
 <Routes>
   <Route path='/' element={authUser? <HomePage/>: <Navigate to="/login"/>}/>
@@ -47,7 +48,7 @@ const App = () => {
 </Routes>
 
 <Toaster />
-</>
+</div>
   )
 }
 
