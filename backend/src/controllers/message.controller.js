@@ -5,7 +5,7 @@ export const getUsersForSidebar = async (req,res) =>{
     try {
         const loggedInUserId = req.user._id;   //get the logged in user's id or simply my id
         const filteredUsers = await User.find({_id:{$ne: loggedInUserId}}).select("-password"); //find all users except the logged in user also deselect the password
-        res.status(200).json({filteredUsers})
+        res.status(200).json(filteredUsers)
     } catch (error) {
         console.log("Error in getUserforsidebar:",error.message);
         res.status(500).json({error:"Internal Server Error"}); 
@@ -19,10 +19,10 @@ export const getUsersForSidebar = async (req,res) =>{
             const messages = await Message.find({
                 $or:[
                     {senderId:myId,receiverId:userToChatId},   //either i am the sender
-                    {senderId:userToChatId,receiver:myId}       //or i am the receiver
+                    {senderId:userToChatId,receiverId:myId}       //or i am the receiver
                 ]
             })
-            res.status(200).json({messages});
+            res.status(200).json(messages);
         } catch (error) {
             console.log("Error in getUserforsidebar:",error.message);
         res.status(500).json({error:"Internal Server Error"}); 
@@ -60,7 +60,7 @@ export const getUsersForSidebar = async (req,res) =>{
 
             //todo: realtime functionality goes here =>socket.io
 
-            res.status(201).josn(newMessage);
+            res.status(201).json(newMessage);
         } catch (error) {
             console.log("Error in sendmessage controller:",error.message);
         res.status(500).json({error:"Internal Server Error"}); 
