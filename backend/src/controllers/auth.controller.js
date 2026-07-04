@@ -88,7 +88,7 @@ export const logout = (req,res)=>{
         });
     } catch (error) {
         console.log("Error in logout controller",error.message);
-        res.status(500).jons({
+        res.status(500).json({
             message:"Internal Server Error"
         });
     }
@@ -111,7 +111,7 @@ export const updateProfile = async (req,res)=>{
         res.status(200).json({updatedUser})
     } catch (error) {
         console.log("error in update profile controller:",error);
-        res.status(500).josn({message:"Internal server error"});    
+        res.status(500).json({message:"Internal server error"});    
     }
 }
 
