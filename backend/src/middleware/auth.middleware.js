@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
-export const protectRoute=async (req,res)=>{
+export const protectRoute=async (req,res,next)=>{
     try {
         const token = req.cookies.jwt     //we said .jwt here because we have named it as jwt in lib folder utils eg: if it was x we would be saying it x.
          if(!token){
@@ -21,9 +21,10 @@ export const protectRoute=async (req,res)=>{
             return res.status(404).json({
                 message:"User not found"
             });
+        }
             req.user= user
             next();
-         }
+         
     } catch (error) {
         console.log("Error in ProtectedRoute middleware:",error.message);
         res.status(500).json({
