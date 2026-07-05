@@ -6,10 +6,12 @@ export const useAuthStore = create((set)=>({    //create receives a function
     authUser:null,                              //set later update the store's state
 
     isSigningUp:false,
-    isLoggingIng:false,
+    isLoggingIn:false,
     isUpdatingProfile:false,
 
     isCheckingAuth:true,
+
+    onlineUsers : [],
 
     checkAuth: async()=>{
         try {
@@ -23,7 +25,7 @@ export const useAuthStore = create((set)=>({    //create receives a function
         }
     },
 
-    signup: async ({data})=>{
+    signup: async (data)=>{
         set({isSigningUp:true});
         try {
             const res = await axiosInstance.post("/auth/signup",data);
