@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { useChatStore } from '../store/useChatStore';
 import { Image, Send, X } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const MessageInput = () => {
 
@@ -19,7 +20,7 @@ const MessageInput = () => {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreview(reader.result);
+      setImagePreview(reader.result); 
     };
     reader.readAsDataURL(file);
   };
