@@ -8,11 +8,14 @@ import { connectDB } from "./lib/db.js";
 
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
-
+import {app,server} from "./lib/socket.js";
 
 
 dotenv.config();
-const app= express();
+
+// const app= express();
+// because we have already created it in socket.io
+
 const PORT = process.env.PORT
 
 // app.use(express.json());
@@ -30,7 +33,9 @@ app.use(cors({
 app.use("/api/auth",authRoutes);
 app.use("/api/messages",messageRoutes);
 
-app.listen(PORT, ()=>{
+
+// replaced app.listen with server.listen after using socket.io
+server.listen(PORT, ()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
     connectDB();
 }) 
